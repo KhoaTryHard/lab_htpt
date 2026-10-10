@@ -1,0 +1,3 @@
+# Optional: only for rebuilding the two-page PDF, not running the simulator.
+reportlab==4.4.9
+pypdf==6.10.0

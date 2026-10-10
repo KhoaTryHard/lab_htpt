@@ -1,13 +1,13 @@
 # Phân tích benchmark
 
-Ma trận chính thức gồm 720 lượt đo: 30 lượt cho mỗi RTT, tình huống và chế độ. RTT được proxy chia đều trước request và trước response.
+Ma trận gồm 720 lượt đo: 30 lượt cho mỗi RTT, tình huống và chế độ. RTT được proxy chia đều trước request và trước response.
 
 | RTT | Server validation median (ms) | Local validation median (ms) | Request server/local |
 |---:|---:|---:|---:|
-| 0 ms | 31.2 | 0.1 | 30 / 0 |
-| 200 ms | 216.7 | 0.1 | 30 / 0 |
-| 500 ms | 524.6 | 0.1 | 30 / 0 |
-| 1000 ms | 1024.4 | 0.1 | 30 / 0 |
+| 0 | 31.6 | 0.1 | 30 / 0 |
+| 200 | 218.9 | 0.1 | 30 / 0 |
+| 500 | 519.7 | 0.1 | 30 / 0 |
+| 1000 | 1021.3 | 0.1 | 30 / 0 |
 
 Với lỗi định dạng, local validation phản hồi trong khoảng thời gian xử lý JavaScript và không gửi request. Server validation phải trả một round-trip nên thời gian tăng gần theo RTT. Với dữ liệu hợp lệ hoặc email đã tồn tại, cả hai chế độ vẫn cần server; local validation chỉ loại bỏ lỗi định dạng phía client.
 
