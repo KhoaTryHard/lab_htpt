@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=65"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "twopc-lab-simulator"
+version = "1.0.0"
+description = "A TCP two-phase commit simulator with WAL and crash recovery"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+twopc = "twopc.cli:main"
+
+[tool.setuptools]
+packages = ["twopc"]

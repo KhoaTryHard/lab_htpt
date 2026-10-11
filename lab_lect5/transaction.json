@@ -1,0 +1,5 @@
+{
+  "P1": [{"op": "SET", "key": "x", "value": 10}],
+  "P2": [{"op": "SET", "key": "x", "value": 20}],
+  "P3": [{"op": "SET", "key": "x", "value": 30}]
+}
