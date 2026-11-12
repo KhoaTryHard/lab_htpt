@@ -6,3 +6,17 @@ reports/smoke3/
 reports/final-smoke/
 reports/check/
 *.log
+
+# Local AI coding tools: configuration, instructions, and temporary output
+.forgewright/
+.claude/
+.codex/
+.cursor/
+.agents/
+.aider*
+.clinerules/
+.cursorrules
+.windsurfrules
+AGENTS.md
+CLAUDE.md
+GEMINI.md
