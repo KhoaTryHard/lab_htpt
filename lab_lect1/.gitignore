@@ -6,6 +6,12 @@ reports/smoke3/
 reports/final-smoke/
 reports/check/
 *.log
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+playwright-report/
 
 # Local AI coding tools: configuration, instructions, and temporary output
 .forgewright/

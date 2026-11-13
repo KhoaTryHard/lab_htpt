@@ -5,15 +5,13 @@
   "type": "module",
   "description": "Client/server latency hiding lab for Distributed Systems.",
   "scripts": {
-    "start": "node src/server.mjs",
-    "start:proxy": "node src/proxy.mjs",
-    "demo": "node scripts/run-demo.mjs",
-    "test": "node --test test/validation.test.mjs",
+    "start": "uv run python -m latency_lab.server",
+    "start:proxy": "uv run python -m latency_lab.proxy",
+    "demo": "uv run python -m latency_lab.demo",
+    "test": "uv run pytest",
     "test:e2e": "playwright test",
-    "bench": "node scripts/benchmark.mjs"
-  },
-  "dependencies": {
-    "express": "^5.1.0"
+    "test:ui": "playwright test --ui",
+    "bench": "uv run python -m latency_lab.benchmark"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0"

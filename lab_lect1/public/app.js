@@ -6,7 +6,14 @@ const result = document.querySelector('#result');
 const button = document.querySelector('#submit-button');
 const fields = ['fullName', 'email', 'password', 'confirmPassword'];
 const params = new URLSearchParams(location.search);
-const rtt = Number(params.get('rtt') || 0);
+let defaultRtt = 0;
+if (!params.has('rtt')) {
+  try {
+    const config = await fetch('/api/lab-config').then((response) => response.json());
+    defaultRtt = config.rttMs;
+  } catch { /* Direct server access uses zero simulated RTT. */ }
+}
+const rtt = Math.max(0, Number(params.get('rtt') ?? defaultRtt));
 document.querySelector('#rtt-label').textContent = `${Number.isFinite(rtt) ? rtt : 0} ms`;
 
 window.__lab = { last: null, requestCount: 0 };
@@ -40,6 +47,8 @@ form.addEventListener('submit', async (event) => {
   clearErrors();
   result.textContent = 'Đang xử lý…';
   result.className = 'result';
+  delete result.dataset.outcome;
+  delete result.dataset.feedbackMs;
   button.disabled = true;
   const startedAt = performance.now();
   const payload = readForm();

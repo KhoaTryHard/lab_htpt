@@ -1,0 +1,26 @@
+{
+  "valid": {
+    "fullName": "Nguyễn Văn A",
+    "email": "a@example.test",
+    "password": "password1",
+    "confirmPassword": "password1"
+  },
+  "cases": [
+    { "name": "valid", "changes": {}, "errors": [] },
+    { "name": "normalize", "changes": { "fullName": "  Nguyễn Văn A  ", "email": "  A@EXAMPLE.TEST  " }, "errors": [] },
+    { "name": "missing-name", "changes": { "fullName": "" }, "errors": ["fullName"] },
+    { "name": "short-name", "changes": { "fullName": "A" }, "errors": ["fullName"] },
+    { "name": "wrong-types", "changes": { "fullName": 42, "email": [], "password": false, "confirmPassword": {} }, "errors": ["fullName", "email", "password", "confirmPassword"] },
+    { "name": "broken-email", "changes": { "email": "broken" }, "errors": ["email"] },
+    { "name": "two-at-signs", "changes": { "email": "a@b@example.test" }, "errors": ["email"] },
+    { "name": "space-in-email", "changes": { "email": "a b@example.test" }, "errors": ["email"] },
+    { "name": "email-newline", "changes": { "email": "a\nb@example.test" }, "errors": ["email"] },
+    { "name": "unicode-name", "changes": { "fullName": "😀" }, "errors": [] },
+    { "name": "js-bom-trimming", "changes": { "fullName": "\ufeffAn\ufeff", "email": "\ufeffA@example.test\ufeff" }, "errors": [] },
+    { "name": "unicode-email", "changes": { "email": "TÊN@vídụ.test" }, "errors": [] },
+    { "name": "python-only-whitespace", "changes": { "email": "a\u0085b@example.test" }, "errors": [] },
+    { "name": "short-password", "changes": { "password": "short", "confirmPassword": "short" }, "errors": ["password"] },
+    { "name": "password-mismatch", "changes": { "confirmPassword": "different" }, "errors": ["confirmPassword"] },
+    { "name": "missing-confirmation", "changes": { "confirmPassword": "" }, "errors": ["confirmPassword"] }
+  ]
+}

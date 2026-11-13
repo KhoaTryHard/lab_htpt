@@ -1,441 +1,435 @@
-<!-- Bao cao HTML truc quan ket qua benchmark validation client va server. -->
 <!doctype html>
+<!-- Bao cao benchmark Python/FastAPI; co the mo truc tiep trong trinh duyet. -->
 <html lang="vi">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Latency Hiding Benchmark</title>
     <style>
-      body {
-        font: 15px system-ui;
-        background: #091423;
-        color: #eaf4ff;
-        margin: 32px;
-      }
-      main {
-        max-width: 1200px;
-        margin: auto;
-      }
-      h1 {
-        color: #63d9ed;
-      }
-      p {
-        color: #a9bad0;
-      }
-      .chart {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 14px;
-      }
-      .card {
-        border: 1px solid #2a4668;
-        border-radius: 12px;
-        padding: 14px;
-        background: #10223a;
-      }
-      .bar {
-        height: 12px;
-        background: #63d9ed;
-        border-radius: 5px;
-        margin: 5px 0 12px;
-      }
-      .bar.client {
-        background: #a3edbb;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        font-size: 13px;
-      }
-      th,
-      td {
-        border-bottom: 1px solid #263d58;
-        padding: 7px;
-        text-align: left;
-      }
-      th {
-        color: #ffd38a;
-      }
+      body { font: 15px system-ui; background: #091423; color: #eaf4ff; margin: 32px; }
+      main { max-width: 1200px; margin: auto; }
+      h1 { color: #63d9ed; }
+      p { color: #a9bad0; }
+      .chart { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 14px; }
+      .card { border: 1px solid #2a4668; border-radius: 12px; padding: 14px;
+        background: #10223a; }
+      .bar { height: 12px; background: #63d9ed; border-radius: 5px; margin: 5px 0 12px; }
+      .bar.client { background: #a3edbb; }
+      .table-scroll { overflow-x: auto; }
+      table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; }
+      th, td { border-bottom: 1px solid #263d58; padding: 7px; text-align: left; }
+      th { color: #ffd38a; }
     </style>
   </head>
   <body>
     <main>
       <h1>Latency Hiding · Benchmark</h1>
-      <p>
-        Median feedback theo round-trip mô phỏng. Local validation giữ lỗi định
-        dạng ở trình duyệt; server validation phải chờ response.
-      </p>
-      <section class="chart" id="chart"></section>
-      <table>
-        <thead>
-          <tr>
-            <th>RTT</th>
-            <th>Tình huống</th>
-            <th>Mode</th>
-            <th>n</th>
-            <th>Median ms</th>
-            <th>P95 ms</th>
-            <th>Requests</th>
-            <th>Request bytes</th>
-            <th>Response bytes</th>
-            <th>Outcome</th>
-          </tr>
-        </thead>
-        <tbody id="rows"></tbody>
-      </table>
+      <p>Backend Python/FastAPI. Median feedback theo round-trip mô phỏng.
+        Local validation giữ lỗi định dạng ở trình duyệt; server validation chờ response.</p>
+      <section class="chart" id="chart">
+      <article class="card"><strong>invalid_format</strong>
+        <div><small>0 ms</small>
+          <div><small>server: 15.9 ms (30 req)</small>
+            <div class="bar server" style="width:100.00%"></div>
+          </div>
+          <div><small>client: 0.1 ms (0 req)</small>
+            <div class="bar client" style="width:2.00%"></div>
+          </div>
+        </div>
+        <div><small>200 ms</small>
+          <div><small>server: 220.2 ms (30 req)</small>
+            <div class="bar server" style="width:100.00%"></div>
+          </div>
+          <div><small>client: 0.1 ms (0 req)</small>
+            <div class="bar client" style="width:2.00%"></div>
+          </div>
+        </div>
+        <div><small>500 ms</small>
+          <div><small>server: 527.9 ms (30 req)</small>
+            <div class="bar server" style="width:100.00%"></div>
+          </div>
+          <div><small>client: 0.1 ms (0 req)</small>
+            <div class="bar client" style="width:2.00%"></div>
+          </div>
+        </div>
+        <div><small>1000 ms</small>
+          <div><small>server: 1026.2 ms (30 req)</small>
+            <div class="bar server" style="width:100.00%"></div>
+          </div>
+          <div><small>client: 0.1 ms (0 req)</small>
+            <div class="bar client" style="width:2.00%"></div>
+          </div>
+        </div>
+      </article>
+      <article class="card"><strong>valid</strong>
+        <div><small>0 ms</small>
+          <div><small>server: 26.8 ms (30 req)</small>
+            <div class="bar server" style="width:100.00%"></div>
+          </div>
+          <div><small>client: 19.9 ms (30 req)</small>
+            <div class="bar client" style="width:74.25%"></div>
+          </div>
+        </div>
+        <div><small>200 ms</small>
+          <div><small>server: 220.6 ms (30 req)</small>
+            <div class="bar server" style="width:100.00%"></div>
+          </div>
+          <div><small>client: 220.1 ms (30 req)</small>
+            <div class="bar client" style="width:99.77%"></div>
+          </div>
+        </div>
+        <div><small>500 ms</small>
+          <div><small>server: 529.0 ms (30 req)</small>
+            <div class="bar server" style="width:100.00%"></div>
+          </div>
+          <div><small>client: 525.3 ms (30 req)</small>
+            <div class="bar client" style="width:99.30%"></div>
+          </div>
+        </div>
+        <div><small>1000 ms</small>
+          <div><small>server: 1026.8 ms (30 req)</small>
+            <div class="bar server" style="width:100.00%"></div>
+          </div>
+          <div><small>client: 1023.5 ms (30 req)</small>
+            <div class="bar client" style="width:99.68%"></div>
+          </div>
+        </div>
+      </article>
+      <article class="card"><strong>duplicate</strong>
+        <div><small>0 ms</small>
+          <div><small>server: 21.3 ms (30 req)</small>
+            <div class="bar server" style="width:85.89%"></div>
+          </div>
+          <div><small>client: 24.8 ms (30 req)</small>
+            <div class="bar client" style="width:100.00%"></div>
+          </div>
+        </div>
+        <div><small>200 ms</small>
+          <div><small>server: 221.8 ms (30 req)</small>
+            <div class="bar server" style="width:100.00%"></div>
+          </div>
+          <div><small>client: 218.6 ms (30 req)</small>
+            <div class="bar client" style="width:98.56%"></div>
+          </div>
+        </div>
+        <div><small>500 ms</small>
+          <div><small>server: 528.5 ms (30 req)</small>
+            <div class="bar server" style="width:100.00%"></div>
+          </div>
+          <div><small>client: 525.4 ms (30 req)</small>
+            <div class="bar client" style="width:99.41%"></div>
+          </div>
+        </div>
+        <div><small>1000 ms</small>
+          <div><small>server: 1027.3 ms (30 req)</small>
+            <div class="bar server" style="width:100.00%"></div>
+          </div>
+          <div><small>client: 1023.8 ms (30 req)</small>
+            <div class="bar client" style="width:99.66%"></div>
+          </div>
+        </div>
+      </article>
+      </section>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>RTT</th><th>Tình huống</th><th>Mode</th><th>n</th><th>Median ms</th>
+              <th>P95 ms</th><th>Requests</th><th>Request bytes</th><th>Response bytes</th>
+              <th>Outcome</th></tr>
+          </thead>
+          <tbody id="rows">
+        <tr>
+          <td>0 ms</td>
+          <td>invalid_format</td>
+          <td>server</td>
+          <td>30</td>
+          <td>15.9</td>
+          <td>26.4</td>
+          <td>30</td>
+          <td>3000</td>
+          <td>2850</td>
+          <td>server-error</td>
+        </tr>
+        <tr>
+          <td>0 ms</td>
+          <td>invalid_format</td>
+          <td>client</td>
+          <td>30</td>
+          <td>0.1</td>
+          <td>1.0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>client-validation-error</td>
+        </tr>
+        <tr>
+          <td>0 ms</td>
+          <td>valid</td>
+          <td>server</td>
+          <td>30</td>
+          <td>26.8</td>
+          <td>31.2</td>
+          <td>30</td>
+          <td>3540</td>
+          <td>3120</td>
+          <td>success</td>
+        </tr>
+        <tr>
+          <td>0 ms</td>
+          <td>valid</td>
+          <td>client</td>
+          <td>30</td>
+          <td>19.9</td>
+          <td>29.0</td>
+          <td>30</td>
+          <td>3540</td>
+          <td>3120</td>
+          <td>success</td>
+        </tr>
+        <tr>
+          <td>0 ms</td>
+          <td>duplicate</td>
+          <td>server</td>
+          <td>30</td>
+          <td>21.3</td>
+          <td>25.6</td>
+          <td>30</td>
+          <td>3360</td>
+          <td>2760</td>
+          <td>server-error</td>
+        </tr>
+        <tr>
+          <td>0 ms</td>
+          <td>duplicate</td>
+          <td>client</td>
+          <td>30</td>
+          <td>24.8</td>
+          <td>27.7</td>
+          <td>30</td>
+          <td>3360</td>
+          <td>2760</td>
+          <td>server-error</td>
+        </tr>
+        <tr>
+          <td>200 ms</td>
+          <td>invalid_format</td>
+          <td>server</td>
+          <td>30</td>
+          <td>220.2</td>
+          <td>235.1</td>
+          <td>30</td>
+          <td>3000</td>
+          <td>2850</td>
+          <td>server-error</td>
+        </tr>
+        <tr>
+          <td>200 ms</td>
+          <td>invalid_format</td>
+          <td>client</td>
+          <td>30</td>
+          <td>0.1</td>
+          <td>0.2</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>client-validation-error</td>
+        </tr>
+        <tr>
+          <td>200 ms</td>
+          <td>valid</td>
+          <td>server</td>
+          <td>30</td>
+          <td>220.6</td>
+          <td>230.7</td>
+          <td>30</td>
+          <td>3540</td>
+          <td>3120</td>
+          <td>success</td>
+        </tr>
+        <tr>
+          <td>200 ms</td>
+          <td>valid</td>
+          <td>client</td>
+          <td>30</td>
+          <td>220.1</td>
+          <td>227.9</td>
+          <td>30</td>
+          <td>3540</td>
+          <td>3120</td>
+          <td>success</td>
+        </tr>
+        <tr>
+          <td>200 ms</td>
+          <td>duplicate</td>
+          <td>server</td>
+          <td>30</td>
+          <td>221.8</td>
+          <td>227.7</td>
+          <td>30</td>
+          <td>3360</td>
+          <td>2760</td>
+          <td>server-error</td>
+        </tr>
+        <tr>
+          <td>200 ms</td>
+          <td>duplicate</td>
+          <td>client</td>
+          <td>30</td>
+          <td>218.6</td>
+          <td>228.8</td>
+          <td>30</td>
+          <td>3360</td>
+          <td>2760</td>
+          <td>server-error</td>
+        </tr>
+        <tr>
+          <td>500 ms</td>
+          <td>invalid_format</td>
+          <td>server</td>
+          <td>30</td>
+          <td>527.9</td>
+          <td>532.9</td>
+          <td>30</td>
+          <td>3000</td>
+          <td>2850</td>
+          <td>server-error</td>
+        </tr>
+        <tr>
+          <td>500 ms</td>
+          <td>invalid_format</td>
+          <td>client</td>
+          <td>30</td>
+          <td>0.1</td>
+          <td>0.2</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>client-validation-error</td>
+        </tr>
+        <tr>
+          <td>500 ms</td>
+          <td>valid</td>
+          <td>server</td>
+          <td>30</td>
+          <td>529.0</td>
+          <td>535.3</td>
+          <td>30</td>
+          <td>3540</td>
+          <td>3120</td>
+          <td>success</td>
+        </tr>
+        <tr>
+          <td>500 ms</td>
+          <td>valid</td>
+          <td>client</td>
+          <td>30</td>
+          <td>525.3</td>
+          <td>532.0</td>
+          <td>30</td>
+          <td>3540</td>
+          <td>3120</td>
+          <td>success</td>
+        </tr>
+        <tr>
+          <td>500 ms</td>
+          <td>duplicate</td>
+          <td>server</td>
+          <td>30</td>
+          <td>528.5</td>
+          <td>532.4</td>
+          <td>30</td>
+          <td>3360</td>
+          <td>2760</td>
+          <td>server-error</td>
+        </tr>
+        <tr>
+          <td>500 ms</td>
+          <td>duplicate</td>
+          <td>client</td>
+          <td>30</td>
+          <td>525.4</td>
+          <td>534.5</td>
+          <td>30</td>
+          <td>3360</td>
+          <td>2760</td>
+          <td>server-error</td>
+        </tr>
+        <tr>
+          <td>1000 ms</td>
+          <td>invalid_format</td>
+          <td>server</td>
+          <td>30</td>
+          <td>1026.2</td>
+          <td>1046.8</td>
+          <td>30</td>
+          <td>3000</td>
+          <td>2850</td>
+          <td>server-error</td>
+        </tr>
+        <tr>
+          <td>1000 ms</td>
+          <td>invalid_format</td>
+          <td>client</td>
+          <td>30</td>
+          <td>0.1</td>
+          <td>0.2</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>client-validation-error</td>
+        </tr>
+        <tr>
+          <td>1000 ms</td>
+          <td>valid</td>
+          <td>server</td>
+          <td>30</td>
+          <td>1026.8</td>
+          <td>1034.2</td>
+          <td>30</td>
+          <td>3540</td>
+          <td>3120</td>
+          <td>success</td>
+        </tr>
+        <tr>
+          <td>1000 ms</td>
+          <td>valid</td>
+          <td>client</td>
+          <td>30</td>
+          <td>1023.5</td>
+          <td>1032.4</td>
+          <td>30</td>
+          <td>3540</td>
+          <td>3120</td>
+          <td>success</td>
+        </tr>
+        <tr>
+          <td>1000 ms</td>
+          <td>duplicate</td>
+          <td>server</td>
+          <td>30</td>
+          <td>1027.3</td>
+          <td>1033.6</td>
+          <td>30</td>
+          <td>3360</td>
+          <td>2760</td>
+          <td>server-error</td>
+        </tr>
+        <tr>
+          <td>1000 ms</td>
+          <td>duplicate</td>
+          <td>client</td>
+          <td>30</td>
+          <td>1023.8</td>
+          <td>1033.4</td>
+          <td>30</td>
+          <td>3360</td>
+          <td>2760</td>
+          <td>server-error</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
     </main>
-    <script>
-      const summary = [
-        {
-          rtt: 0,
-          scenario: "invalid_format",
-          mode: "server",
-          n: 30,
-          median_feedback_ms: 31.599999994039536,
-          p95_feedback_ms: 33.29999999701977,
-          requests: 30,
-          request_body_bytes: 3000,
-          response_body_bytes: 2850,
-          outcomes: "server-error",
-        },
-        {
-          rtt: 0,
-          scenario: "invalid_format",
-          mode: "client",
-          n: 30,
-          median_feedback_ms: 0.09999999403953552,
-          p95_feedback_ms: 0.10000000894069672,
-          requests: 0,
-          request_body_bytes: 0,
-          response_body_bytes: 0,
-          outcomes: "client-validation-error",
-        },
-        {
-          rtt: 0,
-          scenario: "valid",
-          mode: "server",
-          n: 30,
-          median_feedback_ms: 30.099999994039536,
-          p95_feedback_ms: 33.6000000089407,
-          requests: 30,
-          request_body_bytes: 3540,
-          response_body_bytes: 3120,
-          outcomes: "success",
-        },
-        {
-          rtt: 0,
-          scenario: "valid",
-          mode: "client",
-          n: 30,
-          median_feedback_ms: 21.900000005960464,
-          p95_feedback_ms: 33.599999994039536,
-          requests: 30,
-          request_body_bytes: 3540,
-          response_body_bytes: 3120,
-          outcomes: "success",
-        },
-        {
-          rtt: 0,
-          scenario: "duplicate",
-          mode: "server",
-          n: 30,
-          median_feedback_ms: 32,
-          p95_feedback_ms: 33.79999999701977,
-          requests: 30,
-          request_body_bytes: 3360,
-          response_body_bytes: 2760,
-          outcomes: "server-error",
-        },
-        {
-          rtt: 0,
-          scenario: "duplicate",
-          mode: "client",
-          n: 30,
-          median_feedback_ms: 18.600000008940697,
-          p95_feedback_ms: 32.599999994039536,
-          requests: 30,
-          request_body_bytes: 3360,
-          response_body_bytes: 2760,
-          outcomes: "server-error",
-        },
-        {
-          rtt: 200,
-          scenario: "invalid_format",
-          mode: "server",
-          n: 30,
-          median_feedback_ms: 218.90000000596046,
-          p95_feedback_ms: 223.20000000298023,
-          requests: 30,
-          request_body_bytes: 3000,
-          response_body_bytes: 2850,
-          outcomes: "server-error",
-        },
-        {
-          rtt: 200,
-          scenario: "invalid_format",
-          mode: "client",
-          n: 30,
-          median_feedback_ms: 0.09999999403953552,
-          p95_feedback_ms: 0.20000000298023224,
-          requests: 0,
-          request_body_bytes: 0,
-          response_body_bytes: 0,
-          outcomes: "client-validation-error",
-        },
-        {
-          rtt: 200,
-          scenario: "valid",
-          mode: "server",
-          n: 30,
-          median_feedback_ms: 217.09999999403954,
-          p95_feedback_ms: 225.1000000089407,
-          requests: 30,
-          request_body_bytes: 3540,
-          response_body_bytes: 3120,
-          outcomes: "success",
-        },
-        {
-          rtt: 200,
-          scenario: "valid",
-          mode: "client",
-          n: 30,
-          median_feedback_ms: 218.70000000298023,
-          p95_feedback_ms: 225.09999999403954,
-          requests: 30,
-          request_body_bytes: 3540,
-          response_body_bytes: 3120,
-          outcomes: "success",
-        },
-        {
-          rtt: 200,
-          scenario: "duplicate",
-          mode: "server",
-          n: 30,
-          median_feedback_ms: 220.3999999910593,
-          p95_feedback_ms: 227.79999999701977,
-          requests: 30,
-          request_body_bytes: 3360,
-          response_body_bytes: 2760,
-          outcomes: "server-error",
-        },
-        {
-          rtt: 200,
-          scenario: "duplicate",
-          mode: "client",
-          n: 30,
-          median_feedback_ms: 219.79999999701977,
-          p95_feedback_ms: 227.19999998807907,
-          requests: 30,
-          request_body_bytes: 3360,
-          response_body_bytes: 2760,
-          outcomes: "server-error",
-        },
-        {
-          rtt: 500,
-          scenario: "invalid_format",
-          mode: "server",
-          n: 30,
-          median_feedback_ms: 519.6999999880791,
-          p95_feedback_ms: 533.3000000119209,
-          requests: 30,
-          request_body_bytes: 3000,
-          response_body_bytes: 2850,
-          outcomes: "server-error",
-        },
-        {
-          rtt: 500,
-          scenario: "invalid_format",
-          mode: "client",
-          n: 30,
-          median_feedback_ms: 0.09999999403953552,
-          p95_feedback_ms: 0.20000000298023224,
-          requests: 0,
-          request_body_bytes: 0,
-          response_body_bytes: 0,
-          outcomes: "client-validation-error",
-        },
-        {
-          rtt: 500,
-          scenario: "valid",
-          mode: "server",
-          n: 30,
-          median_feedback_ms: 527.3000000119209,
-          p95_feedback_ms: 531.9000000059605,
-          requests: 30,
-          request_body_bytes: 3540,
-          response_body_bytes: 3120,
-          outcomes: "success",
-        },
-        {
-          rtt: 500,
-          scenario: "valid",
-          mode: "client",
-          n: 30,
-          median_feedback_ms: 527.0999999940395,
-          p95_feedback_ms: 531.7999999970198,
-          requests: 30,
-          request_body_bytes: 3540,
-          response_body_bytes: 3120,
-          outcomes: "success",
-        },
-        {
-          rtt: 500,
-          scenario: "duplicate",
-          mode: "server",
-          n: 30,
-          median_feedback_ms: 519.9000000059605,
-          p95_feedback_ms: 532.7999999970198,
-          requests: 30,
-          request_body_bytes: 3360,
-          response_body_bytes: 2760,
-          outcomes: "server-error",
-        },
-        {
-          rtt: 500,
-          scenario: "duplicate",
-          mode: "client",
-          n: 30,
-          median_feedback_ms: 520.6000000089407,
-          p95_feedback_ms: 531.5,
-          requests: 30,
-          request_body_bytes: 3360,
-          response_body_bytes: 2760,
-          outcomes: "server-error",
-        },
-        {
-          rtt: 1000,
-          scenario: "invalid_format",
-          mode: "server",
-          n: 30,
-          median_feedback_ms: 1021.2999999970198,
-          p95_feedback_ms: 1029.3999999910593,
-          requests: 30,
-          request_body_bytes: 3000,
-          response_body_bytes: 2850,
-          outcomes: "server-error",
-        },
-        {
-          rtt: 1000,
-          scenario: "invalid_format",
-          mode: "client",
-          n: 30,
-          median_feedback_ms: 0.09999999403953552,
-          p95_feedback_ms: 0.20000000298023224,
-          requests: 0,
-          request_body_bytes: 0,
-          response_body_bytes: 0,
-          outcomes: "client-validation-error",
-        },
-        {
-          rtt: 1000,
-          scenario: "valid",
-          mode: "server",
-          n: 30,
-          median_feedback_ms: 1021.6000000089407,
-          p95_feedback_ms: 1031.2999999970198,
-          requests: 30,
-          request_body_bytes: 3540,
-          response_body_bytes: 3120,
-          outcomes: "success",
-        },
-        {
-          rtt: 1000,
-          scenario: "valid",
-          mode: "client",
-          n: 30,
-          median_feedback_ms: 1024.5999999940395,
-          p95_feedback_ms: 1031,
-          requests: 30,
-          request_body_bytes: 3540,
-          response_body_bytes: 3120,
-          outcomes: "success",
-        },
-        {
-          rtt: 1000,
-          scenario: "duplicate",
-          mode: "server",
-          n: 30,
-          median_feedback_ms: 1024.2000000029802,
-          p95_feedback_ms: 1029.5999999940395,
-          requests: 30,
-          request_body_bytes: 3360,
-          response_body_bytes: 2760,
-          outcomes: "server-error",
-        },
-        {
-          rtt: 1000,
-          scenario: "duplicate",
-          mode: "client",
-          n: 30,
-          median_feedback_ms: 1022.6000000089407,
-          p95_feedback_ms: 1030.4000000059605,
-          requests: 30,
-          request_body_bytes: 3360,
-          response_body_bytes: 2760,
-          outcomes: "server-error",
-        },
-      ];
-      const fmt = (n) => Number(n).toFixed(1);
-      const rows = document.querySelector("#rows");
-      for (const r of summary) {
-        const tr = document.createElement("tr");
-        tr.innerHTML =
-          "<td>" +
-          r.rtt +
-          " ms</td><td>" +
-          r.scenario +
-          "</td><td>" +
-          r.mode +
-          "</td><td>" +
-          r.n +
-          "</td><td>" +
-          fmt(r.median_feedback_ms) +
-          "</td><td>" +
-          fmt(r.p95_feedback_ms) +
-          "</td><td>" +
-          r.requests +
-          "</td><td>" +
-          r.request_body_bytes +
-          "</td><td>" +
-          r.response_body_bytes +
-          "</td><td>" +
-          r.outcomes +
-          "</td>";
-        rows.append(tr);
-      }
-      const chart = document.querySelector("#chart");
-      for (const scenario of ["invalid_format", "valid", "duplicate"]) {
-        const card = document.createElement("article");
-        card.className = "card";
-        card.innerHTML = "<strong>" + scenario + "</strong>";
-        for (const rtt of [0, 200, 500, 1000]) {
-          const pair = summary.filter(
-            (r) => r.scenario === scenario && r.rtt === rtt,
-          );
-          const max = Math.max(...pair.map((r) => r.median_feedback_ms), 1);
-          const label = document.createElement("div");
-          label.innerHTML = "<small>" + rtt + " ms</small>";
-          for (const r of pair) {
-            const line = document.createElement("div");
-            line.innerHTML =
-              "<small>" +
-              r.mode +
-              ": " +
-              fmt(r.median_feedback_ms) +
-              " ms (" +
-              r.requests +
-              ' req)</small><div class="bar ' +
-              r.mode +
-              '" style="width:' +
-              Math.max(2, Math.min(100, (r.median_feedback_ms / max) * 100)) +
-              '%"></div>';
-            label.append(line);
-          }
-          card.append(label);
-        }
-        chart.append(card);
-      }
-    </script>
   </body>
 </html>

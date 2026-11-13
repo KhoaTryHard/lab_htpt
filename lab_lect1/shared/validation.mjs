@@ -1,7 +1,8 @@
-/* Kiem tra va chuan hoa du lieu dang ky dung chung cho client va server. */
+/* Validation tai client; quy tac duoc doi chieu voi latency_lab/validation.py. */
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function validateRegistration(input = {}) {
+  input = input && typeof input === 'object' && !Array.isArray(input) ? input : {};
   const value = {
     fullName: typeof input.fullName === 'string' ? input.fullName.trim() : '',
     email: typeof input.email === 'string' ? input.email.trim().toLowerCase() : '',
